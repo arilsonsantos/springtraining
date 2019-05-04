@@ -41,7 +41,8 @@ public class StudentEndPoint {
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<?> getById(@PathVariable("id") Long id) {
-        Student student = verifyIfStudentExists(id);
+        verifyIfStudentExists(id);
+        Student student = studentRepository.findById(id).get();
 
         return new ResponseEntity<>(student, HttpStatus.OK);
     }
@@ -69,14 +70,12 @@ public class StudentEndPoint {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    private Student verifyIfStudentExists(Long id) {
+    private void verifyIfStudentExists(Long id) {
         Optional<Student> student = studentRepository.findById(id);
 
         if (!student.isPresent()) {
             throw new ResourceNotFoundException("Student not found for ID: " + id);
         }
-
-        return student.get();
     }
 
 }
