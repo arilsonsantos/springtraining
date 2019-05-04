@@ -1,8 +1,12 @@
 package br.com.orion.cursospring.model;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,23 +18,15 @@ import lombok.NoArgsConstructor;
 @Data
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
-public class Student {
+@Entity
+public class Student implements Serializable{
 
-    private int id;
+    private static final long serialVersionUID = -9219503984838382945L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @NotNull
     private String name;
-    public static List<Student> studantList;
-
-    static {
-        studentRepository();
-    }
-
-    public Student(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    private static void studentRepository() {
-        studantList = new ArrayList<>(Arrays.asList(new Student(1, "João"), new Student(2, "Maria")));
-    }
 
 }

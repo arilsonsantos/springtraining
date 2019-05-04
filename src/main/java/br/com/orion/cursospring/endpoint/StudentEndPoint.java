@@ -1,6 +1,6 @@
 package br.com.orion.cursospring.endpoint;
 
-import java.time.LocalDateTime;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,8 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.orion.cursospring.error.CustomErrorType;
 import br.com.orion.cursospring.model.Student;
-import br.com.orion.cursospring.utils.DateUtils;
-import lombok.extern.slf4j.Slf4j;
+import br.com.orion.cursospring.repository.StudentRepository;
 
 
 /**
@@ -25,53 +24,52 @@ import lombok.extern.slf4j.Slf4j;
  * 
  * @param <TesteUt>
  */
-@Slf4j
 @RestController
 @RequestMapping(path = "/students")
 public class StudentEndPoint {
     
-    private DateUtils dateUtils;
-
+    private final StudentRepository studentRepository;
     @Autowired
-    public StudentEndPoint(DateUtils dataUtil) {
-        this.dateUtils = dataUtil;
+    public StudentEndPoint(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
     }
 
     @GetMapping
     public ResponseEntity<?> findAll() {
-        log.info(dateUtils.formatLocalDateTimeToDateBaseStyle(LocalDateTime.now()));
-        return new ResponseEntity<>(Student.studantList, HttpStatus.OK);
+        return new ResponseEntity<>(studentRepository.findAll(), HttpStatus.OK);
     }
-
+    
     @GetMapping(path = "/{id}")
-    public ResponseEntity<?> getById(@PathVariable("id") int id) {
-        Student student = new Student();
-        student.setId(id);
-        int index = Student.studantList.indexOf(student);
-        if (index == -1) {
+    public ResponseEntity<?> getById(@PathVariable("id") Long id) {
+        Optional<Student> student = studentRepository.findById(id);
+
+        if (student.get() == null) {
             return new ResponseEntity<>(new CustomErrorType("Student not found"), HttpStatus.NOT_FOUND);
         }
-        
-        return new ResponseEntity<>(Student.studantList.get(index), HttpStatus.OK);
-        
+
+        return new ResponseEntity<>(student.get(), HttpStatus.OK);
+    }
+    
+    @GetMapping(path = "/name/{name}")
+    public ResponseEntity<?>   findByName(@PathVariable String name){
+        return new ResponseEntity<>(studentRepository.findByNameIgnoreCaseContaining(name), HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<?> save(@RequestBody Student student) {
-        Student.studantList.add(student);
-        return new ResponseEntity<>(student, HttpStatus.OK);
+        Student studentSaved = studentRepository.save(student);
+        return new ResponseEntity<>(studentSaved, HttpStatus.CREATED);
     }
 
-    @DeleteMapping
-    public ResponseEntity<?> delete(@RequestBody Student student) {
-        Student.studantList.remove(student);
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        studentRepository.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping
     public ResponseEntity<?> update(@RequestBody Student student) {
-        Student.studantList.remove(student);
-        Student.studantList.add(student);
+        studentRepository.save(student);
         return new ResponseEntity<>(HttpStatus.OK);
     }
     

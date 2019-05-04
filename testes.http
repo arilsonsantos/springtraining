@@ -2,7 +2,7 @@ GET http://localhost:8080/orion/api/students
 
 ###
 
-GET http://localhost:8080/orion/api/students/name/oa
+GET http://localhost:8080/orion/api/students/name/ia
 
 ###
 
@@ -10,8 +10,8 @@ POST http://localhost:8080/orion/api/students
 content-type: application/json
 
 {
-    "id": 3,
-    "name": "Joao"
+    "id": 2,
+    "name": "Maria"
 }
 
 ###
