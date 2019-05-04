@@ -1,22 +1,14 @@
 package br.com.orion.cursospring.error;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * ResourceNotFoundDetails
  */
 @Getter
-public class ResourceNotFoundDetails {
-
-    private String title;
-    private int status;
-    private String detail;
-    private long timestamp;
-    private String developerMessage;
-
-    private ResourceNotFoundDetails() {
-
-    }
+@NoArgsConstructor
+public class ResourceNotFoundDetails extends ErrorDetail{
 
     public static final class Builder {
         private static ResourceNotFoundDetails build = new ResourceNotFoundDetails();

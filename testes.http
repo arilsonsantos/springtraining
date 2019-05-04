@@ -14,7 +14,7 @@ content-type: application/json
 
 {
     "id": 2,
-    "name": "Maria"
+    "name":""
 }
 
 ###
