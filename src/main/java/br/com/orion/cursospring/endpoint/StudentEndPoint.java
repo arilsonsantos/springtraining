@@ -2,6 +2,8 @@ package br.com.orion.cursospring.endpoint;
 
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,7 +55,7 @@ public class StudentEndPoint {
     }
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody Student student) {
+    public ResponseEntity<?> save(@Valid @RequestBody Student student) {
         Student studentSaved = studentRepository.save(student);
         return new ResponseEntity<>(studentSaved, HttpStatus.CREATED);
     }
@@ -66,7 +68,7 @@ public class StudentEndPoint {
     }
 
     @PutMapping
-    public ResponseEntity<?> update(@RequestBody Student student) {
+    public ResponseEntity<?> update(@Valid @RequestBody Student student) {
         verifyIfStudentExists(student.getId());
         studentRepository.save(student);
         return new ResponseEntity<>(HttpStatus.OK);
