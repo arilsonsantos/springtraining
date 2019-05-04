@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -28,5 +29,9 @@ public class Student implements Serializable{
     private Long id;
     @NotEmpty
     private String name;
+
+    public Student( String name) {
+        this.name = name;
+    }
 
 }

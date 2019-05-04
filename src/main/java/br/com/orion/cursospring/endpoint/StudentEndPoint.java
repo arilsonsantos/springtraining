@@ -2,6 +2,7 @@ package br.com.orion.cursospring.endpoint;
 
 import java.util.Optional;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,7 @@ public class StudentEndPoint {
     }
 
     @PostMapping
+    @Transactional
     public ResponseEntity<?> save(@Valid @RequestBody Student student) {
         Student studentSaved = studentRepository.save(student);
         return new ResponseEntity<>(studentSaved, HttpStatus.CREATED);
