@@ -14,10 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.orion.cursospring.error.CustomErrorType;
+import br.com.orion.cursospring.error.ResourceNotFoundException;
 import br.com.orion.cursospring.model.Student;
 import br.com.orion.cursospring.repository.StudentRepository;
-
 
 /**
  * StudentEndPoint
@@ -27,8 +26,9 @@ import br.com.orion.cursospring.repository.StudentRepository;
 @RestController
 @RequestMapping(path = "/students")
 public class StudentEndPoint {
-    
+
     private final StudentRepository studentRepository;
+
     @Autowired
     public StudentEndPoint(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
@@ -38,20 +38,16 @@ public class StudentEndPoint {
     public ResponseEntity<?> findAll() {
         return new ResponseEntity<>(studentRepository.findAll(), HttpStatus.OK);
     }
-    
+
     @GetMapping(path = "/{id}")
     public ResponseEntity<?> getById(@PathVariable("id") Long id) {
-        Optional<Student> student = studentRepository.findById(id);
+        Student student = verifyIfStudentExists(id);
 
-        if (student.get() == null) {
-            return new ResponseEntity<>(new CustomErrorType("Student not found"), HttpStatus.NOT_FOUND);
-        }
-
-        return new ResponseEntity<>(student.get(), HttpStatus.OK);
+        return new ResponseEntity<>(student, HttpStatus.OK);
     }
-    
+
     @GetMapping(path = "/name/{name}")
-    public ResponseEntity<?>   findByName(@PathVariable String name){
+    public ResponseEntity<?> findByName(@PathVariable String name) {
         return new ResponseEntity<>(studentRepository.findByNameIgnoreCaseContaining(name), HttpStatus.OK);
     }
 
@@ -72,8 +68,15 @@ public class StudentEndPoint {
         studentRepository.save(student);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    
 
-   
-    
+    private Student verifyIfStudentExists(Long id) {
+        Optional<Student> student = studentRepository.findById(id);
+
+        if (!student.isPresent()) {
+            throw new ResourceNotFoundException("Student not found for ID: " + id);
+        }
+
+        return student.get();
+    }
+
 }

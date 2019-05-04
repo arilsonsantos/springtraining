@@ -2,6 +2,9 @@ GET http://localhost:8080/orion/api/students
 
 ###
 
+GET http://localhost:8080/orion/api/students/2
+
+###
 GET http://localhost:8080/orion/api/students/name/ia
 
 ###
