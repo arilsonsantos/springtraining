@@ -23,7 +23,7 @@ DELETE  http://localhost:8080/orion/api/students
 content-type: application/json
 
 {
-    "id": 3,
+    "id": 1,
     "name": "John Lennon"
 }
 
@@ -33,6 +33,6 @@ PUT http://localhost:8080/orion/api/students
 content-type: application/json
 
 {
-    "id": 1,
+    "id": 2,
     "name": "John Lennon"
 }
