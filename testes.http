@@ -1,0 +1,31 @@
+GET http://localhost:8080/orion/api/students
+
+###
+
+POST http://localhost:8080/orion/api/students
+content-type: application/json
+
+{
+    "id": 3,
+    "name": "John"
+}
+
+###
+
+DELETE  http://localhost:8080/orion/api/students
+content-type: application/json
+
+{
+    "id": 1,
+    "name": "John Lennon"
+}
+
+###
+
+PUT http://localhost:8080/orion/api/students
+content-type: application/json
+
+{
+    "id": 3,
+    "name": "John DDD"
+}
