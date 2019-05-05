@@ -1,4 +1,4 @@
-package br.com.orion.cursospring;
+package br.com.orion.school;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

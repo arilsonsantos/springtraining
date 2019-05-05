@@ -1,4 +1,4 @@
-package br.com.orion.cursospring.model;
+package br.com.orion.school.model;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package br.com.orion.cursospring.utils;
+package br.com.orion.school.utils;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

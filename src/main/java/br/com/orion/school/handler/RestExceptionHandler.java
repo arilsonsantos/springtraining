@@ -1,4 +1,4 @@
-package br.com.orion.cursospring.handler;
+package br.com.orion.school.handler;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import br.com.orion.cursospring.error.ErrorDetails;
-import br.com.orion.cursospring.error.ResourceNotFoundDetails;
-import br.com.orion.cursospring.error.ResourceNotFoundException;
-import br.com.orion.cursospring.error.ValidationErrorDetails;
+import br.com.orion.school.error.ErrorDetails;
+import br.com.orion.school.error.ResourceNotFoundDetails;
+import br.com.orion.school.error.ResourceNotFoundException;
+import br.com.orion.school.error.ValidationErrorDetails;
 
 /**
  * RestExceptionHandler

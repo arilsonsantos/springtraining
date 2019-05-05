@@ -1,4 +1,4 @@
-package br.com.orion.cursospring;
+package br.com.orion.school;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

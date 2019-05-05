@@ -1,23 +1,19 @@
-package br.com.orion.cursospring.error;
-
-import java.util.Map;
+package br.com.orion.school.error;
 
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 /**
- * ValidationErrorDetails
+ * ResourceNotFoundDetails
  */
 @Getter
-@Setter
-public class ValidationErrorDetails extends ErrorDetails {
-
-    private Map<String, String> errors;
+@NoArgsConstructor
+public class ResourceNotFoundDetails extends ErrorDetails{
 
     public static final class Builder {
-        private static final ValidationErrorDetails objBuilder = new ValidationErrorDetails();
+        private static ResourceNotFoundDetails objBuilder = new ResourceNotFoundDetails();
 
-        public static Builder newBuilder() {
+        public static Builder newBuider() {
             return new Builder();
         }
 
@@ -46,13 +42,7 @@ public class ValidationErrorDetails extends ErrorDetails {
             return this;
         }
 
-
-        public Builder addError(Map<String, String> fieldsErrors) {
-            objBuilder.errors = fieldsErrors;
-            return this;
-        }
-
-        public ValidationErrorDetails build() {
+        public ResourceNotFoundDetails build() {
             return objBuilder;
         }
 

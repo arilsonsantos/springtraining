@@ -1,50 +1,61 @@
-package br.com.orion.cursospring.error;
+package br.com.orion.school.error;
+
+import java.util.Map;
 
 import lombok.Getter;
 import lombok.Setter;
 
 /**
- * ErrorDetail
+ * ValidationErrorDetails
  */
 @Getter
 @Setter
-public class ErrorDetails {
+public class ValidationErrorDetails extends ErrorDetails {
 
-    protected String title;
-    protected int status;
-    protected String detail;
-    protected long timestamp;
-    protected String developerMessage;
+    private Map<String, String> errors;
 
     public static final class Builder {
-        private static final ErrorDetails objBuilder = new ErrorDetails();
+        private static final ValidationErrorDetails objBuilder = new ValidationErrorDetails();
 
         public static Builder newBuilder() {
             return new Builder();
         }
+
         public Builder title(String title) {
             objBuilder.title = title;
             return this;
         }
+
         public Builder status(int status) {
             objBuilder.status = status;
             return this;
         }
+
         public Builder detail(String detail) {
             objBuilder.detail = detail;
             return this;
         }
+
         public Builder timestamp(long timestamp) {
             objBuilder.timestamp = timestamp;
             return this;
         }
+
         public Builder developerMessage(String developerMessage) {
             objBuilder.developerMessage = developerMessage;
             return this;
         }
-        public ErrorDetails build() {
+
+
+        public Builder addError(Map<String, String> fieldsErrors) {
+            objBuilder.errors = fieldsErrors;
+            return this;
+        }
+
+        public ValidationErrorDetails build() {
             return objBuilder;
         }
+
     }
 
 }

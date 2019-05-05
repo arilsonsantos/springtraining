@@ -1,4 +1,4 @@
-package br.com.orion.cursospring.endpoint;
+package br.com.orion.school.endpoint;
 
 import java.util.Optional;
 
@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.orion.cursospring.error.ResourceNotFoundException;
-import br.com.orion.cursospring.model.Student;
-import br.com.orion.cursospring.repository.StudentRepository;
+import br.com.orion.school.error.ResourceNotFoundException;
+import br.com.orion.school.model.Student;
+import br.com.orion.school.repository.StudentRepository;
 
 /**
  * StudentEndPoint

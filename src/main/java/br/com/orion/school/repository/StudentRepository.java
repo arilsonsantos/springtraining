@@ -1,10 +1,10 @@
-package br.com.orion.cursospring.repository;
+package br.com.orion.school.repository;
 
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import br.com.orion.cursospring.model.Student;
+import br.com.orion.school.model.Student;
 
 /**
  * StudentRepository
