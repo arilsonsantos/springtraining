@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
  */
 @Getter
 @NoArgsConstructor
-public class ResourceNotFoundDetails extends ErrorDetail{
+public class ResourceNotFoundDetails extends ErrorDetails{
 
     public static final class Builder {
         private static ResourceNotFoundDetails build = new ResourceNotFoundDetails();

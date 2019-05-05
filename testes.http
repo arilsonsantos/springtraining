@@ -13,8 +13,8 @@ POST http://localhost:8080/orion/api/students
 content-type: application/json
 
 {
-    "id": 2,
-    "name":""
+    "id": 1,
+    "name": 
 }
 
 ###
