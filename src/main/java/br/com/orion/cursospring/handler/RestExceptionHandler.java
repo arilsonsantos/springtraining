@@ -26,18 +26,17 @@ import br.com.orion.cursospring.error.ValidationErrorDetails;
  * RestExceptionHandler
  */
 @ControllerAdvice
-//implements ExceptionMapper<ConstraintViolationException> 
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<?> handleResourceNotFoundException(ResourceNotFoundException rfnException) {
         ResourceNotFoundDetails details = ResourceNotFoundDetails.Builder
         .newBuider().timestamp(new Date().getTime())
-                .status(HttpStatus.NOT_FOUND.value())
-                .title("Resource not found")
-                .detail(rfnException.getMessage())
-                .developerMessage(rfnException.getClass().getName())
-                .build();
+        .status(HttpStatus.NOT_FOUND.value())
+        .title("Resource not found")
+        .detail(rfnException.getMessage())
+        .developerMessage(rfnException.getClass().getName())
+        .build();
 
         return new ResponseEntity<>(details, HttpStatus.NOT_FOUND);
     }
@@ -45,30 +44,26 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @Override
     public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException exception,
             HttpHeaders headers, HttpStatus status, WebRequest request) {
-        {
-            List<FieldError> fieldErros = exception.getBindingResult().getFieldErrors();
 
-            //String fields = fieldErros.stream().map(FieldError::getField).collect(Collectors.joining(","));
+        List<FieldError> fieldErros = exception.getBindingResult().getFieldErrors();
 
-            Map<String, String> errors = new HashMap<>();
-            for (FieldError fe : fieldErros) {
-                errors.put(fe.getField(), fe.getDefaultMessage());
-            }
-
-            ValidationErrorDetails details = ValidationErrorDetails.Builder
-            .newBuilder()
-            .timestamp(new Date().getTime())
-                    .status(HttpStatus.BAD_REQUEST.value())
-                    .title("Argument not valid")
-                    .detail("Argument not valid")
-                    .addError(errors)
-                    .developerMessage(exception.getClass().getName())
-                    .build();
-
-            return new ResponseEntity<>(details, HttpStatus.BAD_REQUEST);
+        Map<String, String> errors = new HashMap<>();
+        for (FieldError fe : fieldErros) {
+            errors.put(fe.getField(), fe.getDefaultMessage());
         }
-    }
 
+        ValidationErrorDetails details = ValidationErrorDetails.Builder
+        .newBuilder()
+        .timestamp(new Date()
+        .getTime())
+        .status(HttpStatus.BAD_REQUEST.value()).title("Argument not valid")
+        .detail("Argument invalid in fields")
+        .addError(errors).developerMessage(exception.getClass().getName())
+        .build();
+
+        return new ResponseEntity<>(details, HttpStatus.BAD_REQUEST);
+    }
+    
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(
             HttpMessageNotReadableException exception, HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -89,14 +84,14 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleExceptionInternal(
 			Exception exception, @Nullable Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
 
-                ErrorDetails details = ErrorDetails.Builder
-                .newBuilder()
-                .timestamp(new Date().getTime())
-                .status(status.value())
-                .title("Internal error")
-                .detail(exception.getMessage())
-                .developerMessage(exception.getClass().getName())
-                .build();
+        ErrorDetails details = ErrorDetails.Builder
+        .newBuilder()
+        .timestamp(new Date().getTime())
+        .status(status.value())
+        .title("Internal error")
+        .detail(exception.getMessage())
+        .developerMessage(exception.getClass().getName())
+        .build();
                         
 		return new ResponseEntity<>(details, status);
 	}
