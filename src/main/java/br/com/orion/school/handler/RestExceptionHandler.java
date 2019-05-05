@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<?> handleResourceNotFoundException(ResourceNotFoundException rfnException) {
         ResourceNotFoundDetails details = ResourceNotFoundDetails.Builder
-        .newBuider().timestamp(new Date().getTime())
+        .newBuilder().timestamp(new Date().getTime())
         .status(HttpStatus.NOT_FOUND.value())
         .title("Resource not found")
         .detail(rfnException.getMessage())
@@ -80,20 +81,32 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(details, HttpStatus.BAD_REQUEST);
     }
     
-    @Override
-    protected ResponseEntity<Object> handleExceptionInternal(
-			Exception exception, @Nullable Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
 
+    @ExceptionHandler(PropertyReferenceException.class)
+    public ResponseEntity<?> handlePropertyReferenceException(PropertyReferenceException exception) {
         ErrorDetails details = ErrorDetails.Builder
-        .newBuilder()
-        .timestamp(new Date().getTime())
-        .status(status.value())
-        .title("Internal error")
+        .newBuilder().timestamp(new Date().getTime())
+        .status(HttpStatus.NOT_FOUND.value())
+        .title("Reference not found")
         .detail(exception.getMessage())
         .developerMessage(exception.getClass().getName())
         .build();
-                        
-		return new ResponseEntity<>(details, status);
-	}
+
+        return new ResponseEntity<>(details, HttpStatus.NOT_FOUND);
+    }
+
+
+    @Override
+    protected ResponseEntity<Object> handleExceptionInternal(
+            Exception exception, @Nullable Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
+
+        ErrorDetails details = ErrorDetails.Builder.newBuilder().timestamp(new Date().getTime()).status(status.value())
+                .title("Internal error").detail(exception.getMessage()).developerMessage(exception.getClass().getName())
+                .build();
+
+        return new ResponseEntity<>(details, status);
+    }
+    
+    
 
 }

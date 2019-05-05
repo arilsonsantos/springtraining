@@ -13,7 +13,7 @@ public class ResourceNotFoundDetails extends ErrorDetails{
     public static final class Builder {
         private static ResourceNotFoundDetails objBuilder = new ResourceNotFoundDetails();
 
-        public static Builder newBuider() {
+        public static Builder newBuilder() {
             return new Builder();
         }
 
