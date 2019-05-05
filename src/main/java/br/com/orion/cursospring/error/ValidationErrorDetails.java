@@ -17,7 +17,7 @@ public class ValidationErrorDetails extends ErrorDetails {
     public static final class Builder {
         private static final ValidationErrorDetails objBuilder = new ValidationErrorDetails();
 
-        public static Builder newBuider() {
+        public static Builder newBuilder() {
             return new Builder();
         }
 

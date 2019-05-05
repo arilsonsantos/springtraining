@@ -9,12 +9,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.lang.Nullable;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import org.springframework.web.util.WebUtils;
 
 import br.com.orion.cursospring.error.ErrorDetails;
 import br.com.orion.cursospring.error.ResourceNotFoundDetails;
@@ -55,33 +57,49 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
             }
 
             ValidationErrorDetails details = ValidationErrorDetails.Builder
-            .newBuider()
+            .newBuilder()
             .timestamp(new Date().getTime())
-                    .status(status.value())
+                    .status(HttpStatus.BAD_REQUEST.value())
                     .title("Argument not valid")
                     .detail("Argument not valid")
                     .addError(errors)
                     .developerMessage(exception.getClass().getName())
                     .build();
 
-            return new ResponseEntity<>(details, status);
+            return new ResponseEntity<>(details, HttpStatus.BAD_REQUEST);
         }
     }
 
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(
-			HttpMessageNotReadableException exception, HttpHeaders headers, HttpStatus status, WebRequest request) {
+            HttpMessageNotReadableException exception, HttpHeaders headers, HttpStatus status, WebRequest request) {
 
         ErrorDetails details = ErrorDetails.Builder
         .newBuilder()
         .timestamp(new Date().getTime())
-        .status(HttpStatus.NOT_FOUND.value())
+        .status(HttpStatus.BAD_REQUEST.value())
         .title("Resource not found")
         .detail(exception.getMessage())
         .developerMessage(exception.getClass().getName())
         .build();
 
-        return new ResponseEntity<>(details, status);
+        return new ResponseEntity<>(details, HttpStatus.BAD_REQUEST);
+    }
+    
+    @Override
+    protected ResponseEntity<Object> handleExceptionInternal(
+			Exception exception, @Nullable Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
+
+                ErrorDetails details = ErrorDetails.Builder
+                .newBuilder()
+                .timestamp(new Date().getTime())
+                .status(status.value())
+                .title("Internal error")
+                .detail(exception.getMessage())
+                .developerMessage(exception.getClass().getName())
+                .build();
+                        
+		return new ResponseEntity<>(details, status);
 	}
 
 }
