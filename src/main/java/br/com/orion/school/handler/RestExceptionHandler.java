@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.lang.Nullable;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -81,6 +82,20 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(details, HttpStatus.BAD_REQUEST);
     }
     
+    
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<?> handleAccessDeniedException(AccessDeniedException exception) {
+        ErrorDetails details = ErrorDetails.Builder
+        .newBuilder().timestamp(new Date().getTime())
+        .status(HttpStatus.FORBIDDEN.value())
+        .title("Forbidden")
+        .detail("Access denied")
+        .developerMessage(exception.getClass().getName())
+        .build();
+
+        return new ResponseEntity<>(details, HttpStatus.FORBIDDEN);
+    }
 
     @ExceptionHandler(PropertyReferenceException.class)
     public ResponseEntity<?> handlePropertyReferenceException(PropertyReferenceException exception) {

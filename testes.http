@@ -1,15 +1,22 @@
-GET http://localhost:8080/orion/api/students?sort=nome,desc&page=2&size=5
+
+GET http://localhost:8080/orion/api/students
+Authorization: Basic joao 123
+
 
 ###
 
-GET http://localhost:8080/orion/api/students/3
+GET http://localhost:8080/orion/api/students/1
+Authorization: Basic maria 123
 
 ###
+
 GET http://localhost:8080/orion/api/students/name/ia
+Authorization: Basic joao 123
 
 ###
 
 POST http://localhost:8080/orion/api/students
+Authorization: Basic joao 123
 content-type: application/json
 
 {
@@ -20,6 +27,7 @@ content-type: application/json
 ###
 
 DELETE  http://localhost:8080/orion/api/students
+Authorization: Basic maria 123
 content-type: application/json
 
 {
