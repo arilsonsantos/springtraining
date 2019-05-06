@@ -1,4 +1,8 @@
 
+GET http://localhost:8080/orion/api/students/hello
+Authorization: Basic maria 123
+
+
 GET http://localhost:8080/orion/api/students
 Authorization: Basic joao 123
 
@@ -26,14 +30,10 @@ content-type: application/json
 
 ###
 
-DELETE  http://localhost:8080/orion/api/students
+DELETE  http://localhost:8080/orion/api/students/1
 Authorization: Basic maria 123
 content-type: application/json
 
-{
-    "id": 1,
-    "name": "John Lennon"
-}
 
 ###
 

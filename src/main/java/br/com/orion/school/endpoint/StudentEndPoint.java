@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,6 +41,13 @@ public class StudentEndPoint {
         this.studentRepository = studentRepository;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping(path = "/hello")
+    public String hello(@AuthenticationPrincipal UserDetails userDetails) {
+        System.out.println(userDetails);
+        return "Hello " + userDetails.getUsername().toUpperCase();
+        }
+
     @GetMapping
     public ResponseEntity<?> findAll(Pageable pageable) {
         return new ResponseEntity<>(studentRepository.findAll(pageable), HttpStatus.OK);
@@ -46,7 +55,7 @@ public class StudentEndPoint {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(path = "/{id}")
-    public ResponseEntity<?> getById(@PathVariable("id") Long id) {
+    public ResponseEntity<?> getById(@PathVariable("id") Long id){
         verifyIfStudentExists(id);
         Student student = studentRepository.findById(id).get();
 
@@ -65,10 +74,9 @@ public class StudentEndPoint {
         return new ResponseEntity<>(studentSaved, HttpStatus.CREATED);
     }
 
-
-    @DeleteMapping(path = "/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id){
         verifyIfStudentExists(id);
         studentRepository.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
