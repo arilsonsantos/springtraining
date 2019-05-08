@@ -1,7 +1,8 @@
 
 GET http://localhost:8080/orion/api/students/hello
-Authorization: Basic maria 123
+Authorization: Basic joao 123
 
+###
 
 GET http://localhost:8080/orion/api/students
 Authorization: Basic joao 123
@@ -30,7 +31,7 @@ content-type: application/json
 
 ###
 
-DELETE  http://localhost:8080/orion/api/students/1
+DELETE  http://localhost:8080/orion/api/students/2
 Authorization: Basic maria 123
 content-type: application/json
 

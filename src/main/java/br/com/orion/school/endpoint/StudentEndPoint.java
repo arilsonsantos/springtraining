@@ -55,7 +55,8 @@ public class StudentEndPoint {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(path = "/{id}")
-    public ResponseEntity<?> getById(@PathVariable("id") Long id){
+    public ResponseEntity<?> getById(@PathVariable("id") Long id, @AuthenticationPrincipal UserDetails user) {
+        System.out.println(user);
         verifyIfStudentExists(id);
         Student student = studentRepository.findById(id).get();
 
