@@ -19,12 +19,17 @@ public class PageableResponseWrapper<T> extends PageImpl<T> {
     private static final long serialVersionUID = 1L;
 
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-    public PageableResponseWrapper(@JsonProperty("content") List<T> content, @JsonProperty("number") int number,
-            @JsonProperty("size") int size, @JsonProperty("totalElements") Long totalElements,
-            @JsonProperty("pageable") JsonNode pageable, @JsonProperty("last") boolean last,
-            @JsonProperty("totalPages") int totalPages,
-            @JsonProperty("sort") @JsonDeserialize(using = CustomSortDeserializerWrapper.class) Sort sort,
-            @JsonProperty("first") boolean first, @JsonProperty("numberOfElements") int numberOfElements) {
+    public PageableResponseWrapper(
+        @JsonProperty("content") List<T> content, 
+        @JsonProperty("number") int number,
+        @JsonProperty("size") int size, 
+        @JsonProperty("totalElements") Long totalElements,
+        @JsonProperty("pageable") JsonNode pageable, 
+        @JsonProperty("last") boolean last,
+        @JsonProperty("totalPages") int totalPages,
+        @JsonProperty("first") boolean first, 
+        @JsonProperty("numberOfElements") int numberOfElements,
+        @JsonProperty("sort") @JsonDeserialize(using = CustomSortDeserializerWrapper.class) Sort sort){
 
         super(content, PageRequest.of(number, size, sort), totalElements);
     }
