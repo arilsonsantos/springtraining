@@ -4,7 +4,7 @@ Authorization: Basic joao 123
 
 ###
 
-GET http://localhost:8080/orion/api/students
+GET http://localhost:8080/orion/api/students?sort=name,desc
 Authorization: Basic maria 123
 
 

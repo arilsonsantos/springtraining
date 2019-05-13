@@ -50,10 +50,10 @@ public class StudentEndPoint {
 
     @GetMapping
     public ResponseEntity<?> findAll(Pageable pageable) {
-        return new ResponseEntity<>(studentRepository.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(studentRepository.findAll(pageable), HttpStatus.OK);
     }
 
-
+    
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(path = "/{id}")

@@ -27,12 +27,9 @@ public class Student implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
     @NotBlank
     @Size(min = 5, max=100)
     private String name;
-
-    public Student( String name) {
-        this.name = name;
-    }
 
 }
