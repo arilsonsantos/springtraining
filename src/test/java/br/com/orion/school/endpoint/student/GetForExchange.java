@@ -22,19 +22,19 @@ public class GetForExchange extends ApplicationStartTests {
 
     @Test
     public void getObjectStudentTest() {
-        RestTemplate restTemplate = new RestTemplateBuilder()
-        .rootUri("http://localhost:8080/orion/api/students").
-        basicAuthentication("maria", "123").build();
+        RestTemplate restTemplate = new RestTemplateBuilder().rootUri("http://localhost:8080/orion/api/students")
+                .basicAuthentication("maria", "123").build();
 
-        ResponseEntity<PageableResponseWrapper<Student>> exchange = restTemplate
-            .exchange("/?sort=name,desc&sort=id,asc", HttpMethod.GET,null,  new ParameterizedTypeReference<PageableResponseWrapper<Student>>() {
+        ResponseEntity<PageableResponseWrapper<Student>> exchange = restTemplate.exchange(
+                "/?sort=name,desc&sort=id,asc", HttpMethod.GET, null,
+                new ParameterizedTypeReference<PageableResponseWrapper<Student>>() {
                 });
-                
+
         extracted(exchange);
     }
 
     private void extracted(ResponseEntity<PageableResponseWrapper<Student>> exchange) {
         assertEquals(HttpStatus.OK, exchange.getStatusCode());
     }
-    
+
 }
