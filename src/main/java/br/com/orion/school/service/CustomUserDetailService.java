@@ -2,6 +2,9 @@ package br.com.orion.school.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -29,12 +32,23 @@ public class CustomUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = Optional.ofNullable(userRespository.findByUsername(username))
+
+        User user = Optional.ofNullable(userRespository.findByUsernameFetchRole(username))
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        List<GrantedAuthority> admins = AuthorityUtils.createAuthorityList("ROLE_ADMIN", "ROLE_USER");
-        List<GrantedAuthority> users = AuthorityUtils.createAuthorityList("ROLE_USER");
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
-                user.getAdmin() ? admins : users);
+
+        List<String> rolesNames = user.getRoles().stream().map(n -> n.getName()).collect(Collectors.toList());
+        
+        String strRoles = "";
+
+        for (int i = 0; i < rolesNames.size(); ++i, strRoles +=",") {
+            strRoles += "ROLE_"+rolesNames.get(i);
+
+        }
+
+        List<GrantedAuthority> roles = AuthorityUtils.commaSeparatedStringToAuthorityList(strRoles);
+  
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), roles);
+
     }
 
 }

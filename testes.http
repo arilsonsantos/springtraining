@@ -1,47 +1,52 @@
 
-GET http://localhost:8080/orion/api/students/hello
+GET http://localhost:8080/orion/api/v1/students/hello
+Authorization: Basic joao 123
+
+###
+GET http://localhost:8080/orion/api/v1/protected/students
+Authorization: Basic joao 123
+
+###
+# ?sort=name,desc&sort=id,asc
+GET http://localhost:8080/orion/api/v1/admin/students/pages?sort=name,asc&sort=id,asc
+Authorization: Basic joao 123
+
+
+###
+
+GET http://localhost:8080/orion/api/v1/protected/students/3
 Authorization: Basic joao 123
 
 ###
 
-GET http://localhost:8080/orion/api/students?sort=name,desc
-Authorization: Basic maria 123
-
-
-###
-
-GET http://localhost:8080/orion/api/students/1
+GET http://localhost:8080/orion/api/v1/protected/students/name/oao 5
 Authorization: Basic joao 123
 
 ###
 
-GET http://localhost:8080/orion/api/students/name/ia
-Authorization: Basic joao 123
-
-###
-
-POST http://localhost:8080/orion/api/students
+POST http://localhost:8080/orion/api/v1/admin/students
 Authorization: Basic joao 123
 content-type: application/json
 
 {
-    "id": 1,
-    "name": "test"
+    "id": 5,
+    "name": "teste alteração"
 }
 
 ###
 
-DELETE  http://localhost:8080/orion/api/students/2
+DELETE  http://localhost:8080/orion/api/v1/admin/students/5
 Authorization: Basic maria 123
 content-type: application/json
 
 
 ###
 
-PUT http://localhost:8080/orion/api/students
+PUT http://localhost:8080/orion/api/v1/admin/students
+Authorization: Basic maria 123
 content-type: application/json
 
 {
-    "id": 2,
+    "id": 3,
     "name": "John Lennon"
 }

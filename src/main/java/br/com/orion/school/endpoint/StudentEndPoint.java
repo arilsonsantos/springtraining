@@ -31,7 +31,7 @@ import br.com.orion.school.repository.StudentRepository;
  * @param <TesteUt>
  */
 @RestController
-@RequestMapping(path = "/students")
+@RequestMapping(path = "v1")
 public class StudentEndPoint {
 
     private final StudentRepository studentRepository;
@@ -41,22 +41,26 @@ public class StudentEndPoint {
         this.studentRepository = studentRepository;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping(path = "/hello")
+    @GetMapping(path = "students/hello")
     public String hello(@AuthenticationPrincipal UserDetails userDetails) {
         System.out.println(userDetails);
         return "Hello " + userDetails.getUsername().toUpperCase();
         }
 
-    @GetMapping
+    @GetMapping(path = "protected/students")
+    public ResponseEntity<?> findAll() {
+        return new ResponseEntity<>(studentRepository.findAll(), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "admin/students/pages")
     public ResponseEntity<?> findAll(Pageable pageable) {
         return new ResponseEntity<>(studentRepository.findAll(pageable), HttpStatus.OK);
     }
 
+
     
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping(path = "/{id}")
+    @GetMapping(path = "protected/students/{id}")
     public ResponseEntity<?> getById(@PathVariable("id") Long id, @AuthenticationPrincipal UserDetails user) {
         System.out.println(user);
         verifyIfStudentExists(id);
@@ -65,27 +69,26 @@ public class StudentEndPoint {
         return new ResponseEntity<>(student, HttpStatus.OK);
     }
 
-    @GetMapping(path = "/name/{name}")
+    @GetMapping(path = "protected/students/name/{name}")
     public ResponseEntity<?> findByName(@PathVariable String name) {
         return new ResponseEntity<>(studentRepository.findByNameIgnoreCaseContaining(name), HttpStatus.OK);
     }
 
-    @PostMapping
-    @Transactional
+    @PostMapping(path = "admin/students")
+    @Transactional(rollbackOn = Exception.class)
     public ResponseEntity<?> save(@Valid @RequestBody Student student) {
         Student studentSaved = studentRepository.save(student);
         return new ResponseEntity<>(studentSaved, HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping(path = "/{id}")
+    @DeleteMapping(path = "admin/students/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
         verifyIfStudentExists(id);
         studentRepository.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping
+    @PutMapping(path = "admin/students")
     public ResponseEntity<?> update(@Valid @RequestBody Student student) {
         verifyIfStudentExists(student.getId());
         studentRepository.save(student);

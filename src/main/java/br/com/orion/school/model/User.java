@@ -14,6 +14,7 @@ import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,7 +25,8 @@ import lombok.ToString;
  */
 @Getter
 @Setter
-@ToString(exclude = "roles")
+@ToString(of = "name")
+@EqualsAndHashCode(exclude = "roles")
 @Entity
 @NoArgsConstructor
 public class User  {
@@ -48,7 +50,7 @@ public class User  {
     private Boolean admin;
 
     @ManyToMany
-    @JoinTable(name = "users_roles",
+    @JoinTable(name = "user_role",
     joinColumns = @JoinColumn(name = "id_user", referencedColumnName = "id"),
     inverseJoinColumns = @JoinColumn(name="id_role", referencedColumnName = "id"))
     private Collection<Role> roles;

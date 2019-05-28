@@ -24,11 +24,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/h2-console/**").hasRole("ADMIN")// allow h2 console access to admins only
-                .anyRequest().authenticated()// all other urls can be access by any authenticated role
-                .and().httpBasic().and().csrf().ignoringAntMatchers("/h2-console/**")//don't apply CSRF
-                //protection to /h2-console
-                .and().headers().frameOptions().sameOrigin();//allow use of frame to same
+         http.authorizeRequests().antMatchers("/h2-console/**").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/*/students/**").hasRole("USER")
+                .antMatchers("/*/admin/**").hasRole("ADMIN")
+                .and().httpBasic().and().csrf().ignoringAntMatchers("/h2-console/**")
+                .and()
+                .httpBasic()
+                .and().headers().frameOptions().sameOrigin()
+                .and()
+                .csrf().disable();
+                
         // origin urls
         //.and().csrf().disable();
 

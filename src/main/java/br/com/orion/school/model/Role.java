@@ -11,6 +11,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -19,7 +20,8 @@ import lombok.ToString;
  */
 @Entity
 @Data
-@ToString(exclude = "privileges")
+@ToString(of = "name")
+@EqualsAndHashCode(exclude = { "users", "privileges" })
 @NoArgsConstructor
 public class Role {
 
@@ -34,7 +36,7 @@ public class Role {
 
 
     @ManyToMany
-    @JoinTable(name = "roles_privileges", 
+    @JoinTable(name = "role_privilege", 
     joinColumns = @JoinColumn(name = "id_role", referencedColumnName = "id"),
     inverseJoinColumns = @JoinColumn(name = "id_privilege", referencedColumnName = "id"))
     private Collection<Privilege> privileges;
