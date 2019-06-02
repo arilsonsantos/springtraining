@@ -1,4 +1,4 @@
-package br.com.orion.school.endpoint.student;
+package br.com.orion.school.endpoint.student.get;
 
 import static org.junit.Assert.assertEquals;
 
@@ -18,8 +18,9 @@ public class GetForEntityTest extends ApplicationStartTests {
 
     @Test
     public void getObjectStudentTest() {
+        
         RestTemplate restTemplate = new RestTemplateBuilder()
-        .rootUri("http://localhost:8080/orion/api/students").
+        .rootUri("http://localhost:8080/orion/api/v1/protected/students").
         basicAuthentication("maria", "123").build();
 
         ResponseEntity<Student> entity = restTemplate.getForEntity("/{id}", Student.class, "1");
