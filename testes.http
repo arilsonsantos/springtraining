@@ -9,12 +9,12 @@ Authorization: Basic joao 123
 ###
 # ?sort=name,desc&sort=id,asc
 GET http://localhost:8080/orion/api/v1/admin/students/pages?sort=name,asc&sort=id,asc
-Authorization: Basic joao 123
+Authorization: Basic maria 123
 
 
 ###
 
-GET http://localhost:8080/orion/api/v1/protected/students/3
+GET http://localhost:8080/orion/api/v1/protected/students/1
 Authorization: Basic joao 123
 
 ###
@@ -29,7 +29,7 @@ Authorization: Basic joao 123
 content-type: application/json
 
 {
-    "id": 5,
+    "id": 25,
     "name": "teste alteração"
 }
 

@@ -24,24 +24,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-         http.authorizeRequests().antMatchers("/h2-console/**").hasAnyRole("ADMIN", "USER")
+        http
+         .csrf().disable()
+            .authorizeRequests()
+                .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/*/students/**").hasRole("USER")
                 .antMatchers("/*/admin/**").hasRole("ADMIN")
-                .and().httpBasic().and().csrf().ignoringAntMatchers("/h2-console/**")
                 .and()
                 .httpBasic()
-                .and().headers().frameOptions().sameOrigin()
-                .and()
-                .csrf().disable();
-                
-        // origin urls
-        //.and().csrf().disable();
-
+                .and().headers().frameOptions().sameOrigin();
     }
     
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(customUserDetailService).passwordEncoder(passwordEncoder());
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     // @Bean
@@ -53,10 +54,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     //     manager.createUser(User.withUsername("maria").password(encodedPassword).roles("USER", "ADMIN").build());
     //     return manager;
     // }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
 }
