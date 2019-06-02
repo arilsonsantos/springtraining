@@ -2,8 +2,6 @@ package br.com.orion.school.service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +46,6 @@ public class CustomUserDetailService implements UserDetailsService {
         List<GrantedAuthority> roles = AuthorityUtils.commaSeparatedStringToAuthorityList(strRoles);
   
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), roles);
-
     }
 
 }

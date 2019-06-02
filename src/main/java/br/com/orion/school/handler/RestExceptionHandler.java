@@ -96,6 +96,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(details, HttpStatus.FORBIDDEN);
     }
+    
 
     @ExceptionHandler(PropertyReferenceException.class)
     public ResponseEntity<?> handlePropertyReferenceException(PropertyReferenceException exception) {
@@ -121,7 +122,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(details, status);
     }
-    
     
 
 }
