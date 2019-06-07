@@ -1,7 +1,5 @@
 package br.com.orion.school.endpoint;
 
-import java.util.Optional;
-
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -23,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.orion.school.error.ResourceNotFoundException;
 import br.com.orion.school.model.Student;
 import br.com.orion.school.repository.StudentRepository;
+import br.com.orion.school.service.StudentService;
 
 /**
  * StudentEndPoint
@@ -35,10 +34,14 @@ public class StudentEndPoint {
 
     private final StudentRepository studentRepository;
 
+    private final StudentService studentService;
+
     @Autowired
-    public StudentEndPoint(StudentRepository studentRepository) {
+    public StudentEndPoint(StudentRepository studentRepository, StudentService studentService) {
         this.studentRepository = studentRepository;
+        this.studentService = studentService;
     }
+    
 
     @GetMapping(path = "students/hello")
     public String hello(@AuthenticationPrincipal UserDetails userDetails) {
@@ -61,7 +64,7 @@ public class StudentEndPoint {
     public ResponseEntity<?> getById(@PathVariable("id") Long id, @AuthenticationPrincipal UserDetails user) {
         System.out.println(user);
         verifyIfStudentExists(id);
-        Student student = studentRepository.findById(id).get();
+        Student student = studentService.getById(id);
 
         return new ResponseEntity<>(student, HttpStatus.OK);
     }
@@ -93,9 +96,10 @@ public class StudentEndPoint {
     }
 
     private void verifyIfStudentExists(Long id) {
-        Optional<Student> student = studentRepository.findById(id);
+        
+        Student student = studentService.getById(id);
 
-        if (!student.isPresent()) {
+        if (student == null) {
             throw new ResourceNotFoundException("Student not found for ID: " + id);
         }
     }

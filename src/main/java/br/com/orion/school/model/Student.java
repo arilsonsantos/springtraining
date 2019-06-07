@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,7 @@ import lombok.NoArgsConstructor;
 @Data
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Student implements Serializable{
 
