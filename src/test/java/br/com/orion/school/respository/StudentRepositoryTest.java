@@ -10,6 +10,7 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import br.com.orion.school.model.Student;
@@ -21,6 +22,7 @@ import br.com.orion.school.repository.StudentRepository;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 //@AutoConfigureTestDatabase(replace = Replace.NONE) //To use the main database 
+@TestPropertySource(locations="classpath:application-test.properties")
 public class StudentRepositoryTest {
 
     @Autowired

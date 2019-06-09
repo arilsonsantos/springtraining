@@ -68,7 +68,7 @@ public class StudentEndpointTest {
     
     @Test
     public void listStudentWithUserAndPasswordIncorrectReturnStatusCode401() {
-        restTemplate = restTemplate.withBasicAuth("", "1");
+        restTemplate = restTemplate.withBasicAuth("1", "1");
         ResponseEntity<String> student = restTemplate.getForEntity("/v1/protected/students", String.class);
         Assertions.assertThat(student.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
     }

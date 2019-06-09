@@ -40,13 +40,12 @@ Authorization: Basic maria 123
 content-type: application/json
 
 
-###
+### JWT
 
-PUT http://localhost:8080/orion/api/v1/admin/students
-Authorization: Basic maria 123
+POST http://localhost:8080/orion/api/login
 content-type: application/json
 
 {
-    "id": 3,
-    "name": "John Lennon"
+    "username": "maria",
+    "password": "123"
 }
