@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -46,13 +45,11 @@ public class StudentEndPoint {
 
     @GetMapping(path = "students/hello")
     public String hello(@AuthenticationPrincipal UserDetails userDetails) {
-        System.out.println(userDetails);
         return "Hello " + userDetails.getUsername().toUpperCase();
         }
 
     @GetMapping(path = "protected/students")
-    public ResponseEntity<?> findAll(Authentication authentication) {
-        System.out.println(authentication);
+    public ResponseEntity<?> findAll() {
         return new ResponseEntity<>(studentRepository.findAll(), HttpStatus.OK);
     }
 
@@ -63,8 +60,7 @@ public class StudentEndPoint {
 
 
     @GetMapping(path = "protected/students/{id}")
-    public ResponseEntity<?> getById(@PathVariable("id") Long id, Authentication authentication) {
-        System.out.println(authentication.getPrincipal());
+    public ResponseEntity<?> getById(@PathVariable("id") Long id) {
         verifyIfStudentExists(id);
         Student student = studentService.getById(id);
 

@@ -65,7 +65,6 @@ public class StudentEndpointTokenTest {
     public void configProtectedHeaders() {
         String str = "{ \"username\": \"joao\", \"password\": \"123\"}";
         HttpHeaders headers = restTemplate.postForEntity("/login", str, String.class).getHeaders();
-        String token = restTemplate.postForEntity("/login", str, String.class).getStatusCode().toString();
         this.protectedHeader = new HttpEntity<>(headers);
     }
 
