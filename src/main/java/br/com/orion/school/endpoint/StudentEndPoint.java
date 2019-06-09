@@ -22,6 +22,7 @@ import br.com.orion.school.error.ResourceNotFoundException;
 import br.com.orion.school.model.Student;
 import br.com.orion.school.repository.StudentRepository;
 import br.com.orion.school.service.StudentService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -31,6 +32,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @RestController
 @RequestMapping(path = "v1")
+@Api(description =  "Student resource")
 public class StudentEndPoint {
 
     private final StudentRepository studentRepository;
