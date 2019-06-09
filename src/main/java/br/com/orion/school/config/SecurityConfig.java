@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
 
 import br.com.orion.school.enumerations.SecurityEnum;
 import br.com.orion.school.service.CustomUserDetailService;
@@ -39,14 +40,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable().authorizeRequests()
+        //http.cors().and().csrf().disable().authorizeRequests()
+        //Permite acesso através de outros IPs - sem filtro
+        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
+        .and().csrf().disable()
+        .authorizeRequests()
         .antMatchers(HttpMethod.GET, SecurityEnum.SIGN_UP_URL).permitAll()
-                .antMatchers("/h2-console/**").permitAll()
-                .antMatchers("/*/students/**").hasRole("USER")
-                .antMatchers("/*/admin/**").hasRole("ADMIN")
-                .and()
-                .addFilter(new JWTAuthenticationFilter(authenticationManager()))
-                .addFilter(new JWTAuthorizationFilter(authenticationManager(), customUserDetailService));
+        .antMatchers("/h2-console/**").permitAll()
+        .antMatchers("/*/students/**").hasRole("USER")
+        .antMatchers("/*/admin/**").hasRole("ADMIN")
+        .and()
+        .addFilter(new JWTAuthenticationFilter(authenticationManager()))
+        .addFilter(new JWTAuthorizationFilter(authenticationManager(), customUserDetailService));
     }
     
     @Override
