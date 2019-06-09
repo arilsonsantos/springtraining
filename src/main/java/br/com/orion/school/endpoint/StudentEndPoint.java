@@ -22,6 +22,7 @@ import br.com.orion.school.error.ResourceNotFoundException;
 import br.com.orion.school.model.Student;
 import br.com.orion.school.repository.StudentRepository;
 import br.com.orion.school.service.StudentService;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * StudentEndPoint
@@ -49,6 +50,7 @@ public class StudentEndPoint {
         }
 
     @GetMapping(path = "protected/students")
+    @ApiOperation(value = "Return a list with all students", response = Student[].class)
     public ResponseEntity<?> findAll() {
         return new ResponseEntity<>(studentRepository.findAll(), HttpStatus.OK);
     }
