@@ -46,6 +46,14 @@ POST http://localhost:8080/orion/api/login
 content-type: application/json
 
 {
-    "username": "maria",
-    "password": "123"
+    "username": "1",
+    "password": "1"
 }
+
+###
+GET http://localhost:8080/orion/api/v1/protected/students/1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2FvIiwiZXhwIjoxNTYwMDQ3OTExfQ.OEHbh5Md3PK92d43il3d9SkDJ3nWcetodu8rc7N_wJttaD0_MmdUOhRS1FNVAevhl9v7Jrijo_27cDA4zE9K_g
+
+###
+GET http://localhost:8080/orion/api/v1/protected/students
+Authorization: aaaaa.bbbb

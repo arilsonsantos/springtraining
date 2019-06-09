@@ -51,7 +51,8 @@ public class StudentEndPoint {
         }
 
     @GetMapping(path = "protected/students")
-    public ResponseEntity<?> findAll() {
+    public ResponseEntity<?> findAll(Authentication authentication) {
+        System.out.println(authentication);
         return new ResponseEntity<>(studentRepository.findAll(), HttpStatus.OK);
     }
 
